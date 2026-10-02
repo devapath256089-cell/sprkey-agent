@@ -1,0 +1,11 @@
+#!/usr/bin/env python3
+"""
+Sprkey Agent CLI launcher.
+
+This wrapper should behave like the installed `sprkey` command, including
+subcommands such as `gateway`, `cron`, and `doctor`.
+"""
+
+if __name__ == "__main__":
+    from sprkey_cli.main import main
+    main()

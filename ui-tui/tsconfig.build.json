@@ -1,0 +1,8 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "@sprkey/ink": ["src/types/sprkey-ink.d.ts"]
+    }
+  }
+}

@@ -1,0 +1,15 @@
+name: sprkey-memory-wiki
+repo: https://github.com/NightrainbowResearch/sprkey-memory-wiki
+sha: 9bc3913b8474eaf4d7eec32e97af4d77957c36df
+description: 'Memory Wiki dashboard tab: browsable subject pages and daily logs derived from local session
+  history, plus a read-only Persistent Memory (MEMORY.md / USER.md) audit panel.'
+maintainer: NightrainbowResearch
+tier: official
+requires_sprkey: ">=0.21"
+docs_url: https://github.com/NightrainbowResearch/sprkey-memory-wiki#readme
+platforms: []
+capabilities:
+  provides_tools: []
+  provides_hooks: []
+  provides_middleware: []
+  requires_env: []

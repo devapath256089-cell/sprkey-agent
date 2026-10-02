@@ -1,0 +1,20 @@
+name: sprkey-workbench
+repo: https://github.com/sxuff/sprkey-workbench
+sha: f07fb5c90e24c1a396604758feb0fd4ae077760b
+description: The Sprkey desktop app in your browser. `sprkey workbench` serves the desktop interface through the Sprkey dashboard, for headless servers, VPSes and tablets. Disclosure — community plugin, not a Nous product. On the first `sprkey workbench` run and again after each Sprkey update it runs `npm install --ignore-scripts` (guided by Sprkey's lockfile) and Vite against your Sprkey checkout's desktop sources, writing only under ~/.sprkey/sprkey-workbench and its own plugin dir (the checkout is only read), and starts `sprkey dashboard` on loopback when none is running.
+maintainer: sxuff
+tier: community
+category: desktop
+requires_sprkey: ">=0.21"
+docs_url: https://github.com/sxuff/sprkey-workbench#readme
+version: "0.2.1"
+image: https://raw.githubusercontent.com/sxuff/sprkey-workbench/f07fb5c90e24c1a396604758feb0fd4ae077760b/docs/media/banner.png
+screenshots:
+  - https://raw.githubusercontent.com/sxuff/sprkey-workbench/f07fb5c90e24c1a396604758feb0fd4ae077760b/docs/media/session.png
+  - https://raw.githubusercontent.com/sxuff/sprkey-workbench/f07fb5c90e24c1a396604758feb0fd4ae077760b/docs/media/slash-commands.png
+  - https://raw.githubusercontent.com/sxuff/sprkey-workbench/f07fb5c90e24c1a396604758feb0fd4ae077760b/docs/media/model-picker.png
+capabilities:
+  provides_tools: []
+  provides_hooks: []
+  provides_middleware: []
+  requires_env: []
