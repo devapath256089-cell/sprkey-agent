@@ -1,0 +1,40 @@
+# Sprkey custom pack - local MCP catalog entry (documentation + config source).
+# This is a bundled first-party server: Sprkey spawns it locally over stdio,
+# no external service or account is involved.
+manifest_version: 1
+
+name: sprkey-tools
+description: Persistent memory, worklog appends, GitHub stats, and host info.
+source: https://github.com/devapath256089-cell/sprkey-agent/tree/main/sprkey-custom/optional-mcps/sprkey-tools
+
+transport:
+  type: stdio
+  command: "python3"
+  args: ["<path-to-repo>/sprkey-custom/optional-mcps/sprkey-tools/server.py"]
+
+auth:
+  type: none
+
+# Install (see sprkey-custom/install.sh, or add to ~/.sprkey/config.yaml):
+#
+#   mcp_servers:
+#     sprkey-tools:
+#       command: "python3"
+#       args: ["/path/to/repo/sprkey-custom/optional-mcps/sprkey-tools/server.py"]
+#
+# Environment (all optional):
+#   SPRKEY_HOME   - base dir for the memory file (default ~/.sprkey)
+#   GITHUB_TOKEN  - raises GitHub API rate limits for github_repo_stats
+
+suggest:
+  keywords:
+    - memory
+    - worklog
+    - github stats
+    - system info
+
+post_install: |
+  Tools become available after restarting the Sprkey session:
+  remember / recall / forget, worklog_append, github_repo_stats, sysinfo.
+  Memory persists in $SPRKEY_HOME/sprkey_tools_memory.json (default
+  ~/.sprkey/sprkey_tools_memory.json).
