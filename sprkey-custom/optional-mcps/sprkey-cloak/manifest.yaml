@@ -1,0 +1,47 @@
+# Sprkey custom pack - local MCP catalog entry (documentation + config source).
+# First-party server: Sprkey spawns it locally over stdio, fully offline,
+# no external service or account is involved.
+manifest_version: 1
+
+name: sprkey-cloak
+description: PII cloaking - synthetic data to the model, real data back.
+source: https://github.com/devapath256089-cell/sprkey-agent/tree/main/sprkey-custom/optional-mcps/sprkey-cloak
+
+transport:
+  type: stdio
+  command: "python3"
+  args: ["<path-to-repo>/sprkey-custom/optional-mcps/sprkey-cloak/server.py"]
+
+auth:
+  type: none
+
+# Install (see sprkey-custom/install.sh, or add to ~/.sprkey/config.yaml):
+#
+#   mcp_servers:
+#     sprkey-cloak:
+#       command: "python3"
+#       args: ["/path/to/repo/sprkey-custom/optional-mcps/sprkey-cloak/server.py"]
+#
+# Environment (optional):
+#   SPRKEY_HOME - base dir for cloak sessions (default ~/.sprkey)
+
+suggest:
+  keywords:
+    - privacy
+    - pii
+    - cloak
+    - mask sensitive data
+
+post_install: |
+  Tools become available after restarting the Sprkey session:
+  cloak_text / uncloak_text / cloak_file / cloak_status / purge_session.
+
+  Workflow: cloak_text before sending anything sensitive to the model,
+  uncloak_text on the model's reply. Same session -> same fake value, so
+  model output stays internally consistent. Sessions persist in
+  $SPRKEY_HOME/cloak_sessions/.
+
+  Detects: emails, phone numbers (incl. Nepali 98XX/landline/+977), IPv4,
+  API keys and tokens (ghp_, sk-, AKIA, xox), credentials embedded in URLs,
+  citizenship-style IDs, and card-like digit runs. Does NOT detect person
+  names or free-form addresses (needs NER - out of scope for regex).
