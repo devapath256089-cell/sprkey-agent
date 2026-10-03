@@ -11,6 +11,7 @@ customizations that upstream does not ship.
 |------|------------|
 | `skills/worklog-keeper/` | Skill: structured session worklog with Task IDs, append discipline, and daily summaries. |
 | `skills/nepali-calendar/` | Skill: Bikram Sambat <-> AD date conversion, NPT (+5:45) aware, with an offline converter script (`scripts/bs_calendar.py`, BS 1975-2100). |
+| `skills/nepse/` | Skill: NEPSE market data via `scripts/nepse_client.py` — index (+history), scrip quotes, gainers/losers, volume, company search. Official API first, mirror fallback, last-good cache. Offline tests in `tests/`. |
 | `optional-mcps/sprkey-tools/` | Local stdio MCP server: persistent memory (`remember`/`recall`/`forget`), `worklog_append`, `github_repo_stats`, `sysinfo`. |
 | `optional-mcps/sprkey-cloak/` | Local stdio MCP server: PII cloaking (AgentCloak-style) — `cloak_text`/`uncloak_text`/`cloak_file`/`cloak_status`/`purge_session`. Synthetic data goes to the model, real values are restored from the session mapping afterwards. Offline, no external service. |
 
@@ -20,8 +21,9 @@ customizations that upstream does not ship.
 bash sprkey-custom/install.sh --with-mcp
 ```
 
-- Skills are copied to `~/.sprkey/skills/productivity/` (the agent's skill
-  source of truth) and load on the next session start.
+- Skills are copied to `~/.sprkey/skills/<category>/` (worklog-keeper and
+  nepali-calendar under `productivity/`, nepse under `finance/` — the
+  agent's skill source of truth) and load on the next session start.
 - `--with-mcp` appends the `mcp_servers.sprkey-tools` and
   `mcp_servers.sprkey-cloak` blocks to `~/.sprkey/config.yaml`; without the
   flag the blocks are only printed.
@@ -46,6 +48,11 @@ Person names and free-form addresses are intentionally not detected
 
 - Month-length data in `bs_calendar.py` comes from the MIT-licensed
   [nepali-datetime](https://pypi.org/project/nepali-datetime/) project.
+- NEPSE's official API blocks cloud/datacenter IPs (HTTP 401); the nepse
+  client detects this and falls back to a mirror automatically. On
+  residential IPs the clean official JSON path is used. Data can be stale
+  on non-trading days — the provenance note (`[source=... cache=...]`)
+  always shows where the numbers came from.
 - Skill files follow the repo authoring standards (`skills/AGENTS.md`):
   short descriptions, native tool references, and standard section order.
 - Add new features here rather than editing upstream files, so rebrand and

@@ -1,23 +1,30 @@
 #!/usr/bin/env bash
 # Sprkey custom pack installer
-#   - copies skills into ~/.sprkey/skills/productivity/  (source of truth)
+#   - copies skills into ~/.sprkey/skills/<category>/  (source of truth)
 #   - prints the mcp_servers blocks for sprkey-tools + sprkey-cloak
 # Idempotent: safe to run repeatedly.
 set -euo pipefail
 
 SPRKEY_HOME="${SPRKEY_HOME:-$HOME/.sprkey}"
 PACK_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-SKILL_TARGET="$SPRKEY_HOME/skills/productivity"
 TOOLS_DIR="$PACK_DIR/optional-mcps/sprkey-tools"
 CLOAK_DIR="$PACK_DIR/optional-mcps/sprkey-cloak"
 
-echo "==> installing skills to $SKILL_TARGET"
-mkdir -p "$SKILL_TARGET"
+declare -A SKILL_CATEGORY=(
+  [worklog-keeper]=productivity
+  [nepali-calendar]=productivity
+  [nepse]=finance
+)
+
+echo "==> installing skills to $SPRKEY_HOME/skills/<category>"
 for skill in "$PACK_DIR"/skills/*/; do
   name="$(basename "$skill")"
-  rm -rf "$SKILL_TARGET/$name"
-  cp -a "$skill" "$SKILL_TARGET/$name"
-  echo "    skill: $name"
+  cat="${SKILL_CATEGORY[$name]:-productivity}"
+  target="$SPRKEY_HOME/skills/$cat"
+  mkdir -p "$target"
+  rm -rf "$target/$name"
+  cp -a "$skill" "$target/$name"
+  echo "    skill: $name -> skills/$cat"
 done
 
 echo
